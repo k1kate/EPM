@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class testController {
-    @GetMapping("")
+    @GetMapping("/")
     public String page() {
-        return null;
+        return "page";
 
     }
 }
