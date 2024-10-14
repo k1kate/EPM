@@ -22,7 +22,7 @@ import java.util.Map;
 public class WebParser {
     public static Map<Integer, String> parseFaculty() {
         Map<Integer, String> map_faculty = new HashMap<Integer, String>();
-        String url = "https://m-raspisanie.asu.edu.ru/student/faculty"; // Замените на скопированный URL
+        String url = "https://m-raspisanie.asu.edu.ru/student/faculty";
         try {
             // Выполнение AJAX-запроса
             Document doc = Jsoup.connect(url).get();
@@ -49,7 +49,7 @@ public class WebParser {
 
     public static Map<Integer, List<String>> parseSpecialty() {
         Map<Integer, List<String>> map_specialty = new HashMap<Integer, List<String>>();
-        String url = "https://m-raspisanie.asu.edu.ru/student/specialty"; // Замените на скопированный URL
+        String url = "https://m-raspisanie.asu.edu.ru/student/specialty";
         try {
             // Выполнение AJAX-запроса
             Document doc = Jsoup.connect(url).get();
