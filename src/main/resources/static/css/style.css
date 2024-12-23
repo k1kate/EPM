@@ -1,5 +1,14 @@
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+}
 .custom-bg {
-    background-color: #FD7E14 !important;;
+    background-color: #FD7E14 !important;
+}
+
+.custom-color {
+    color: #FD7E14;
 }
 
 
@@ -12,20 +21,25 @@
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
     color: #3d3d3d !important;
-    background-color: #ffffffb5 !important;
+    background-color: #ffd4b2 !important;
     -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
 }
 
+.vh-100 {
+    height: 94vh!important;
+}
+
 .btn-icon {
     width: 40px;
     height: 40px;
-    background-color: #d1baa7; 
+    background-color: #ffd4b2;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
+    overflow: hidden
 }
 
 .btn-center {
@@ -37,5 +51,88 @@
 }
 
 body {
-    background-color: #ffb97f33;
+    background-color: #ffe8d78a;
+}
+/*.schedual-table{*/
+/*    display: block;*/
+
+/*}*/
+.table-head-first {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: white;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    background: #FD7E14;
+    height: 44px;
+}
+.table-head-first  tr th{
+    font-size: 1rem;
+    font-family: "Roboto Light",sans-serif;
+}
+
+.table-head-second{
+    display: flex;
+    padding: 1rem;
+
+}
+
+.table-head-second tr th {
+    background: #ffab63;
+    padding:0.5rem;
+    border-radius: 0.5rem;
+    font-family: "Roboto Light",sans-serif;
+    font-size: 0.8rem;
+    color: #594943;
+
+
+
+}
+
+.table-body{
+    background:#ffab63;
+}
+.table-body tr {
+    /*box-shadow: inset -20px -19px 20px 0px rgb(139 57 38 / 21%)*/
+}
+.table-body tr td{
+    border-bottom: 1rem #fff2e9 solid;
+    font-family: "Roboto Light",sans-serif;
+    padding: 1rem;
+    color: #594943;
+    width: 22px;
+}
+.table-body tr td:first-child{
+    font-weight: bold;
+    font-size: 17px;
+}
+.table-body tr td:nth-child(2){
+    white-space: nowrap;
+}
+
+.table-card {
+    border-top-left-radius: 10px;
+    font-size: 17px;
+    background-color: #ffa356;
+}
+
+.custom-p {
+    margin: 0
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.avatar {
+    /*width: 250px;*/
+    height: 250px;
+    box-shadow: 7px 7px 5px 0px rgb(139 57 38 / 21%);
+    margin-bottom: 34px;
+
 }

@@ -15,13 +15,22 @@ public class Role {
 
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "role")
     private List<User> users;
 
-    public enum RoleName {
+    public enum RoleName { //фиксированный набор заранее известных констант
         ROLE_STUDENT,
         ROLE_TEACHER,
         ROLE_ADMIN
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                '}';
+    }
+
 
 }

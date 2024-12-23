@@ -17,11 +17,17 @@ public class Specialty {
     @Column(name = "name_specialty")
     private String nameSpecialty;
 
+    @Column(name = "id_specialty")
+    private String idSpecialty;
+
+    @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL, orphanRemoval = true) //каскадное удаление, сохран, обновл. orphanRemoval если тут удалили объект то он удалится и в бд
+    private List<Course> course;
+
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL, orphanRemoval = true) //у одной спец. много студентов
     private List<Student> students;
 
     @Override

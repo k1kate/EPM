@@ -1,10 +1,12 @@
 package com.example.EPM.service;
 
-import com.example.EPM.models.Faculty;
-import com.example.EPM.models.Specialty;
+import com.example.EPM.models.*;
 import com.example.EPM.parser.WebParser;
 import com.example.EPM.repository.FacultyRepository;
 import com.example.EPM.repository.SpecialtyRepository;
+import com.example.EPM.repository.StudentRepository;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class ParserService {
     private final FacultyRepository facultyRepository;
     private final SpecialtyRepository specialtyRepository;
     private final WebParser webParser;
+    private final StudentService studentService;
+    private final StudentRepository studentRepository;
 
     public List<Faculty> getFaculty() {
         Map<Integer, String> facultyMap = webParser.parseFaculty();
@@ -38,38 +42,72 @@ public class ParserService {
                 list_faculty.add(faculty);
             }
 
-
-
-
-
-
         }
 
         return list_faculty;
     }
 
-    public List<Specialty> getSpecialty() {
-        Map<Integer, List<String>> specialtyMap = webParser.parseSpecialty();
-        List<Specialty> list_specialty = new ArrayList<>();
+    public void getSpecialty() {
 
-        for (Map.Entry<Integer, List<String>> entry : specialtyMap.entrySet() ) {
-            Integer key = entry.getKey();
-            List<String> value = entry.getValue();
-            for(String name: value) {
-                if (!specialtyRepository.existsBynameSpecialty(name)); {
+        List<Specialty> list_specialty = new ArrayList<>();
+        List<Faculty> faculties = facultyRepository.findAll();
+        for(Faculty f: faculties){
+            JsonArray jsonArray = webParser.parseSpecialty(String.valueOf(f.getId()));
+            for (JsonElement jsonElement : jsonArray) {
+                String name = jsonElement.getAsJsonObject().get("name").getAsString();
+                String id_name = jsonElement.getAsJsonObject().get("id").getAsString();
+
+                if (!specialtyRepository.existsBynameSpecialty(name))
+                {
                     Specialty specialty = new Specialty();
                     specialty.setNameSpecialty(name);
-                    Faculty fac_specialty = facultyRepository.findById(key).orElse(null);
+                    Faculty fac_specialty = facultyRepository.findById(f.getId()).orElse(null);
                     specialty.setFaculty(fac_specialty);
+                    specialty.setIdSpecialty(id_name);
+
+                    JsonArray courses = webParser.parseCourse(id_name);
+
+                    List<Course> arrCourse = new ArrayList<>();
+                    for(JsonElement jsonCourse: courses) {
+                        String id = jsonCourse.getAsJsonObject().get("kurs").getAsString();
+                        Course course = new Course();
+                        course.setCourseNumber(id);
+                        course.setSpecialty(specialty);
+                        arrCourse.add(course);
+
+                    }
+
+                    specialty.setCourse(arrCourse);
+
                     specialtyRepository.save(specialty);
                     list_specialty.add(specialty);
                 }
+
             }
 
-
         }
-        System.out.println(list_specialty);
-        System.out.println(list_specialty.size());
-        return list_specialty;
+
+
     }
+
+    public GroupTimeTable getTimeTable(Student student, Teacher teacher) {
+        GroupTimeTable groupTimeTable;
+        if (teacher==null) {
+            groupTimeTable = webParser.parseTimetable(student.getGroupName(),null);
+        } else {
+            groupTimeTable = webParser.parseTimetable(null,teacher.getFullName());
+        }
+
+        return groupTimeTable;
+
+
+
+    }
+
+
+
+
+
 }
+
+
